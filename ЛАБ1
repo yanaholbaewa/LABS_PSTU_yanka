@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+
+    // ================= FLOAT =================
+    // Объявление переменных типа float
+    float a = 1000.0f;
+    float b = 0.0001f;
+
+    // Объявление промежуточных значений
+    float t1 = a - b;              // (a - b)
+    float t2 = t1 * t1 * t1 * t1;  // (a - b)^4
+    float t3 = a * a * a * a;      // a^4
+    float t4 = 4 * a * a * a * b;  // 4a^3 b
+    float t5 = 6 * a * a * b * b;  // 6a^2 b^2
+    float num_f = t2 - (t3 - t4 + t5);  // числитель
+
+    float t6 = b * b * b * b;      // b^4
+    float t7 = 4 * a * b * b * b;  // 4ab^3
+    float den_f = t6 - t7;         // знаменатель
+
+    // Проверяем знаменатель
+    if (den_f == 0.0f) {
+        // Ветка да: знаменатель = 0
+        cout << endl;
+    } else {
+        // Ветка нет: считаем результат
+        float res_f = num_f / den_f;
+        cout << fixed << setprecision(10);
+        cout << res_f << endl;
+    }
+
+    // ================= DOUBLE =================
+    // Объявление переменных типа double
+    double A = 1000.0;
+    double B = 0.0001;
+
+    // Объявление промежуточных значений
+    double T1 = A - B;              // (A - B)
+    double T2 = T1 * T1 * T1 * T1;  // (A - B)^4
+    double T3 = A * A * A * A;      // A^4
+    double T4 = 4 * A * A * A * B;  // 4A^3 B
+    double T5 = 6 * A * A * B * B;  // 6A^2 B^2
+    double num_d = T2 - (T3 - T4 + T5);  // числитель
+
+    double T6 = B * B * B * B;      // B^4
+    double T7 = 4 * A * B * B * B;  // 4AB^3
+    double den_d = T6 - T7;         // знаменатель
+
+    // Проверяем знаменатель
+    if (den_d == 0.0) {
+        cout << endl;
+    } else {
+        double res_d = num_d / den_d;
+        cout << res_d << endl;
+
+        // Сравнение результатов float и double
+        double diff = fabs(res_d - (double)num_f / den_f);
+
+        if (diff < 1e-6) {
+            // Ветка да: результаты практически одинаковы
+            cout << "Результаты СОВПАДАЮТ" << endl;
+        } else {
+            // Ветка нет: результаты различаются
+            cout << "Результаты РАЗЛИЧАЮТСЯ на "
+                 << diff << endl;
+            cout << "-> float теряет точность!" << endl;
+        }
+    }
+
+    return 0;
+}
